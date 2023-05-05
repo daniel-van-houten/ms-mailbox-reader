@@ -1,1 +1,1 @@
-from .client import MsExchangeClient
+from .reader import MsOutlookMessageReader

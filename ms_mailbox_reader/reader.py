@@ -87,7 +87,7 @@ class SimpleMessage:
         self.conversation_id = None
 
 
-class MsExchangeClient:
+class MsOutlookMessageReader:
     @staticmethod
     def __extract_content_before_from_pattern(message_body: str) -> str:
         """
@@ -138,7 +138,7 @@ class MsExchangeClient:
         # Get the default Inbox folder
         inbox = outlook.GetDefaultFolder(6)  # 6 represents the Inbox folder
 
-        message_filter = message_filter or MsExchangeClient.__get_default_message_filter()
+        message_filter = message_filter or MsOutlookMessageReader.__get_default_message_filter()
 
         # Get all messages that match the filter
         messages = inbox.Items.Restrict(message_filter.render())
@@ -158,7 +158,7 @@ class MsExchangeClient:
             if message_filter.subject and message_filter.subject not in subject:
                 continue
 
-            original_message_content = MsExchangeClient.__extract_content_before_from_pattern(
+            original_message_content = MsOutlookMessageReader.__extract_content_before_from_pattern(
                 message.Body)
 
             yield SimpleMessage(message.SenderName, subject, message.ReceivedTime, original_message_content)
